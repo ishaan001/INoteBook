@@ -16,9 +16,9 @@ startApp();
 const app = express()
 const port = 3000
 
-app.get('/', (req, res) => {
-  res.send('Hello Ishaan')
-})
+//Available Routes
+app.use('/v1/auth', require('./routes/auth.js'))
+app.use('/v1/notes', require('./routes/notes.js'))
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
