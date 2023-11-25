@@ -1,5 +1,5 @@
 
-const mongoose = require("./db");
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 //refer : https://mongoosejs.com/docs/schematypes.html
 // https://mongoosejs.com/docs/guide.html

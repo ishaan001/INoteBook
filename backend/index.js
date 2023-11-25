@@ -16,6 +16,9 @@ startApp();
 const app = express()
 const port = 3000
 
+//this is added so we can ass the body passing in the request
+app.use(express.json())
+
 //Available Routes
 app.use('/v1/auth', require('./routes/auth.js'))
 app.use('/v1/notes', require('./routes/notes.js'))
