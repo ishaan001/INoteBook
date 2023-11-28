@@ -1,6 +1,6 @@
-
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
+
 //refer : https://mongoosejs.com/docs/schematypes.html
 // https://mongoosejs.com/docs/guide.html
 const notesSchema = new Schema({
@@ -22,4 +22,4 @@ const notesSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('notes', notesSchema)
+module.exports = mongoose.model("notes", notesSchema);
