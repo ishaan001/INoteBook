@@ -14,7 +14,8 @@ async function startApp() {
 startApp();
 
 const app = express()
-const port = 3000
+//Changed from 3000 -> 5000 {because react app will run on 3000}
+const port = 5000
 
 //this is added so we can ass the body passing in the request
 app.use(express.json())
