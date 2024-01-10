@@ -42,7 +42,7 @@ router.post("/createUser",[
         return res.json({authToken})
     } catch (error) {
      console.log(error)
-     return res.status(500).send('Some Error Occured')
+     return res.status(500).send('Internal server error')
     }
    
 //    .then(user => res.json(user))
@@ -50,5 +50,43 @@ router.post("/createUser",[
 //     res.json({error : "please enter unique value for email", 
 //              message : err.message})});
 });
+
+
+//Authenticate a user using: POST "/api/auth/login" . No login required
+router.post("/login",[
+    body('email','Enter a valid email').isEmail(),
+    body('password', 'password cannot be blank').exists(),
+] , async (req, res) => {
+   // Finds the validation errors in this request and wraps them in an object with handy functions
+   const errors = validationResult(req);
+   if (!errors.isEmpty()) {
+     return res.status(400).json({ errors: errors.array() });
+   }
+
+   const {email, password} = req.body;
+   try {
+    let user = await User.findOne({email});
+    if(!user){
+        return res.status(400).json({ errors: "please try to login with coreect credentials" })
+    }
+
+    const passCompare =  await bcrypt.compare(password, user.password);
+    if(!passCompare){
+        return res.status(400).json({ errors: "please try to login with coreect credentials" })
+    }
+
+    const data = {
+        user:{
+            id: user.id
+        }
+    }
+    const authToken = jwt.sign(data, JWT_SECRET);
+    return res.json({authToken});
+
+   } catch (error) {
+    console.log(error)
+    return res.status(500).send('Internal server error')
+   }
+})
 
 module.exports = router;
