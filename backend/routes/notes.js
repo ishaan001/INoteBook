@@ -108,22 +108,21 @@ router.put(
 //ROUTE 4: delete a note using: delete "/api/auth/deletenote". login required
 router.delete("/deletenote/:id", fetchuser, async (req, res) => {
   try {
-
     //find the note to be deleted and then delete it
     let note = await Notes.findById(req.params.id);
     //console.log('Note:', note);
 
-    if(!note){
+    if (!note) {
       return res.status(404).send("not found");
     }
 
     //allowed deleted only if user own the notes
-    if(note.user.toString() != req.user.id) {
+    if (note.user.toString() != req.user.id) {
       return res.status(401).send("not allowed");
     }
     note = await Notes.findByIdAndDelete(req.params.id);
     //console.log('Updated Note:', note);
-    res.json({"Success" : "This note has been deleted", note: note});
+    res.json({ Success: "This note has been deleted", note: note });
   } catch (error) {
     console.log(error);
     return res.status(500).send("Internal server error");
